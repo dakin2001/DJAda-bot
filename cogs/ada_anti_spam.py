@@ -45,6 +45,11 @@ class AntiSpamTrap(commands.Cog):
 
         print(f"⚠️ Trap triggered by {member}")
 
+        try:
+            await message.delete()
+        except:
+            pass
+
         # ===================================
         # DM USER
         # ===================================
@@ -116,6 +121,8 @@ class AntiSpamTrap(commands.Cog):
 
             print(f"🔨 {member} tempbanned")
 
+            await message.channel.send(f"<:Emoji_Wow_Patrick:1430608431768932393> {member.mention} triggered the anti-spam trap.\n Temporary ban applied for 5 minutes.")
+
             # Wait 5 min
             await asyncio.sleep(300)
 
@@ -133,36 +140,37 @@ class AntiSpamTrap(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
 
-        await asyncio.sleep(3)
-        channel = self.bot.get_channel(self.trap_channel_id)
+        for guild in self.bot.guilds:
 
-        if channel is None:
-            print("❌ Spam trap channel not found")
-            return
+            channel = guild.get_channel(self.trap_channel_id)
 
-        # Vérifie les derniers messages
-        async for msg in channel.history(limit=10):
+            if channel is None:
+                print("❌ Spam trap channel not found")
+                continue
 
-            # Si le bot a déjà envoyé un embed
-            if msg.author == self.bot.user and msg.embeds:
-                print("ℹ️ Anti-spam warning already exists")
-                return
+            # Vérifie les derniers messages
+            async for msg in channel.history(limit=10):
 
-        embed = discord.Embed(
-            title="Anti-Spam Trap",
-            description=(
-                " This channel is a spam-bot trap. It's here to protect the server from scam/spam bots.\n\n"
-                "So please... Do NOT type here. <:Emoji_Cry_Headmaster:1441146922948624616> \n\n"
-                "If you accidentally trigger the system, you should be automatically unbanned after 5 minutes <:Emoji_Wait_Val:1430608423963332710>."
-            ),
-            color=0xef87ff
-        )
+                # Si le bot a déjà envoyé un embed
+                if msg.author == self.bot.user and msg.embeds:
+                    print("ℹ️ Anti-spam warning already exists")
+                    return
 
-        embed.set_footer(text="MBFC Protection System")
+            embed = discord.Embed(
+                title="It's a Trap!",
+                description=(
+                    "This channel is a spam-bot trap. It's here to protect the server from scam/spam bots.\n\n"
+                    "So please... Do NOT type here. <:Emoji_Cry_Headmaster:1441146922948624616> \n\n"
+                    "If you accidentally trigger the system, you should be automatically unbanned after 5 minutes <:Emoji_Wait_Val:1430608423963332710>."
+                ),
+                color=0xef87ff
+            )
 
-        await channel.send(embed=embed)
+            embed.set_footer(text="MBFC Protection System")
 
-        print("✅ Anti-spam warning message sent")
+            await channel.send(embed=embed)
+
+            print("✅ Anti-spam warning message sent")
 
 async def setup(bot):
     await bot.add_cog(AntiSpamTrap(bot))
