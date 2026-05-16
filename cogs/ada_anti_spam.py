@@ -178,5 +178,8 @@ class AntiSpamTrap(commands.Cog):
 
                 print("✅ Anti-spam warning message sent")
 
+        except Exception as e:
+            print(f"❌ ON_READY ERROR: {e}")
+
 async def setup(bot):
     await bot.add_cog(AntiSpamTrap(bot))
