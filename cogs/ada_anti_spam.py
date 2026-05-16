@@ -130,5 +130,38 @@ class AntiSpamTrap(commands.Cog):
         except Exception as e:
             print(f"Ban error: {e}")
 
+    @commands.Cog.listener()
+    async def on_ready(self):
+
+        channel = self.bot.get_channel(self.trap_channel_id)
+
+        if channel is None:
+            print("❌ Spam trap channel not found")
+            return
+
+        # Vérifie les derniers messages
+        async for msg in channel.history(limit=10):
+
+            # Si le bot a déjà envoyé un embed
+            if msg.author == self.bot.user and msg.embeds:
+                print("ℹ️ Anti-spam warning already exists")
+                return
+
+        embed = discord.Embed(
+            title="Anti-Spam Trap",
+            description=(
+                " This channel is a spam-bot trap. It's here to protect the server from scam/spam bots.\n\n"
+                "So please... Do NOT type here. <:Emoji_Cry_Headmaster:1441146922948624616> \n\n"
+                "If you accidentally trigger the system, you should be automatically unbanned after 5 minutes <:Emoji_Wait_Val:1430608423963332710>."
+            ),
+            color=0xef87ff
+        )
+
+        embed.set_footer(text="MBFC Protection System")
+
+        await channel.send(embed=embed)
+
+        print("✅ Anti-spam warning message sent")
+
 async def setup(bot):
     await bot.add_cog(AntiSpamTrap(bot))
