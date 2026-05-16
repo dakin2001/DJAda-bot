@@ -133,6 +133,7 @@ class AntiSpamTrap(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
 
+        await asyncio.sleep(3)
         channel = self.bot.get_channel(self.trap_channel_id)
 
         if channel is None:
