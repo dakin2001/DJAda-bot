@@ -139,9 +139,8 @@ class AntiSpamTrap(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-
+        
         try:
-
             print("🛡️ AntiSpamTrap on_ready triggered")
 
             for guild in self.bot.guilds:
