@@ -160,5 +160,6 @@ class AntiSpamTrap(commands.Cog):
 
         print("✅ Anti-spam message sent")
 
+
 async def setup(bot):
     await bot.add_cog(AntiSpamTrap(bot))
