@@ -159,7 +159,7 @@ class AntiSpamTrap(commands.Cog):
                 # Vérifie les derniers messages
                 async for msg in channel.history(limit=10):
 
-                    if msg.author == self.bot.user and msg.embeds:
+                    if (msg.author == self.bot.user and msg.embeds and msg.embeds[0].title == "It's a Trap!"):
                         print("ℹ️ Anti-spam warning already exists")
                         return
 
