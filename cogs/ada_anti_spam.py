@@ -75,6 +75,7 @@ class AntiSpamTrap(commands.Cog):
             )
 
             await dm.send(message_part2)
+            '''
             await asyncio.sleep(1)
 
             embed = discord.Embed(
@@ -90,7 +91,7 @@ class AntiSpamTrap(commands.Cog):
             embed.set_footer(text="Bleeding Legend Protection System")
 
             await dm.send(embed=embed)
-
+            '''
         except discord.Forbidden:
             print(f"Impossible d'envoyer un DM à {member} (DM fermé)")
 
@@ -163,12 +164,11 @@ class AntiSpamTrap(commands.Cog):
                         return
 
                 embed = discord.Embed(
-                    title="🛡️ Anti-Spam Trap",
+                    title="It's a Trap!",
                     description=(
-                        "This channel is a spam-bot trap.\n\n"
-                        "Do NOT type here.\n\n"
-                        "If you trigger the system,\n"
-                        "you should be automatically unbanned after 5 minutes."
+                        "This channel is a spam-bot trap. It's here to protect the server from scam/spam bots.\n\n"
+                        "So please... Do NOT type here. <:Emoji_Cry_Headmaster:1441146922948624616> \n\n"
+                        "If you accidentally trigger the system, you should be automatically unbanned after 5 minutes <:Emoji_Wait_Val:1430608423963332710>."
                     ),
                     color=0xef87ff
                 )
