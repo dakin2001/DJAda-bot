@@ -157,11 +157,22 @@ class AntiSpamTrap(commands.Cog):
                 print(f"✅ Found channel: {channel.name}")
 
                 # Vérifie les derniers messages
+                already_exists = False
+
+                # Vérifie les derniers messages
                 async for msg in channel.history(limit=10):
 
-                    if (msg.author == self.bot.user and msg.embeds and msg.embeds[0].title == "It's a Trap!"):
+                    if (
+                        msg.author == self.bot.user
+                        and msg.embeds
+                        and msg.embeds[0].title == "It's a Trap!"
+                    ):
+                        already_exists = True
                         print("ℹ️ Anti-spam warning already exists")
-                        return
+                        break
+
+                if already_exists:
+                    continue
 
                 embed = discord.Embed(
                     title="It's a Trap!",
